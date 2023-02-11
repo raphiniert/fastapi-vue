@@ -25,6 +25,22 @@ cd fastapi-vue
 
 #### Local developemmnt
 
+Create a `.env` file with the following content:
+
+```text
+# backend
+PROJECT_NAME=demo
+
+# Postgres
+POSTGRES_SERVER=db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=fastapi-vue-pg-password
+POSTGRES_DB=fastapi-demo
+POSTGRES_PORT=5432
+```
+
+and run docker compose:
+
 ```shell script
 docker compose up -d
 ```
