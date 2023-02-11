@@ -1,0 +1,15 @@
+version: '3'
+services:
+  backend:
+    env_file:
+      - .env
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        PROJECT_NAME: ${PROJECT_NAME}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/srv/${PROJECT_NAME}
+
