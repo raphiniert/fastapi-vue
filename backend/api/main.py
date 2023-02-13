@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from rich.logging import RichHandler
 
 from api.db.database import database
+from api.routers import demos
 
 
 FORMAT = "%(message)s"
@@ -14,6 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger("fastapi-demo")
 
 app = FastAPI()
+app.include_router(demos.router, prefix="/v1")
 
 
 @app.on_event("startup")
