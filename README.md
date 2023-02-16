@@ -19,7 +19,7 @@ fastapi, elasticsearch and vue
     ├── .pre-commit-config.yml   # pre commit config
     ├── compose.yaml             # docker compose file
     └── README.md                # this readme file
-    
+
 
 ## Setup
 
