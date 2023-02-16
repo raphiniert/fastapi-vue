@@ -3,16 +3,22 @@ fastapi, elasticsearch and vue
 
 ## Project structure
     .
-    ├── backend                 # fastapi app
-    │   ├── api                 # fast
-    │   │   └── main.py         # demo json api
-    │   ├── Dockerfile          # python3.10-alpine, running api main
-    │   └── requirements.txt    # list of version pinned python dependencies
-    ├── .env                    # environment variables
-    ├── .gitignore              # .gitignore file
-    ├── .pre-commit-config.yml  # pre commit config
-    ├── compose.yaml            # docker compose file
-    └── README.md               # this readme file
+    ├── backend                  # fastapi app
+    │   ├── api                  # api
+    │   │   ├── core             # config
+    │   │   ├── crud             # crud functions
+    │   │   ├── db               # db setup and models
+    │   │   ├── routers          # actual endpoints
+    │   │   ├── main.py          # main entrypoint
+    │   │   └── schemas.py       # demo json api schemas
+    │   ├── Dockerfile           # python3.10-alpine, running api main.py
+    │   ├── requirements-dev.txt # list of version pinned dev dependencies
+    │   └── requirements.txt     # list of version pinned python dependencies
+    ├── .env                     # environment variables
+    ├── .gitignore               # .gitignore file
+    ├── .pre-commit-config.yml   # pre commit config
+    ├── compose.yaml             # docker compose file
+    └── README.md                # this readme file
     
 
 ## Setup
@@ -43,4 +49,11 @@ and run docker compose:
 
 ```shell script
 docker compose up -d
+```
+
+**[Optional] Install dev dependencies**
+
+```shell script
+. venv/bin/activate
+pip install -r backend/requirements-dev.txt  # includes requirements.txt
 ```
