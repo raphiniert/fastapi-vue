@@ -14,7 +14,11 @@ logging.basicConfig(
 
 logger = logging.getLogger("fastapi-demo")
 
-app = FastAPI()
+app = FastAPI(
+    title="Fast API Vue Demo",
+    description="Demo project for testing fast api and vuejs.",
+    version="0.0.1",
+)
 app.include_router(demos.router, prefix="/v1")
 
 
@@ -28,9 +32,3 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await async_engine.dispose()
-
-
-@app.get("/")
-async def root():
-    logger.info("Hello World")
-    return {"message": "Hello World"}
