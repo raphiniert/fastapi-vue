@@ -40,3 +40,10 @@ async def update_demo(db: AsyncSession, demo: schemas.Demo):
     await db.commit()
     await db.refresh(db_demo)
     return db_demo
+
+
+async def delete_demo(db: AsyncSession, demo: schemas.Demo):
+    db_demo = await get_demo(db=db, demo_id=demo.id)
+    await db.delete(db_demo)
+    await db.commit()
+    return db_demo

@@ -6,7 +6,7 @@ from sqlalchemy.future import select
 from typing import List
 
 from api import schemas
-from api.crud.demos import get_demo, get_demos, create_demo, update_demo
+from api.crud.demos import create_demo, delete_demo, get_demo, get_demos, update_demo
 from api.db.database import get_db
 
 
@@ -16,6 +16,7 @@ router = APIRouter(
     prefix="/demos",
     tags=["demos"],
     responses={
+        400: {"description": "Bad request"},
         404: {"description": "Not found"},
     },
 )
@@ -44,4 +45,15 @@ async def create_new_demo(demo: schemas.DemoCreate, db: AsyncSession = Depends(g
 async def patch_demo(
     demo_id: int, demo: schemas.Demo, db: AsyncSession = Depends(get_db)
 ):
+    if demo_id != demo.id:
+        raise HTTPException(status_code=400, detail="Demo id's not matching")
     return await update_demo(db=db, demo=demo)
+
+
+@router.delete("/{demo_id}", response_model=schemas.Demo)
+async def remove_demo(
+    demo_id: int, demo: schemas.Demo, db: AsyncSession = Depends(get_db)
+):
+    if demo_id != demo.id:
+        raise HTTPException(status_code=400, detail="Demo id's not matching")
+    return await delete_demo(db=db, demo=demo)
