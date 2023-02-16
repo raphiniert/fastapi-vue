@@ -3,8 +3,8 @@ import logging
 from fastapi import FastAPI
 from rich.logging import RichHandler
 
-from api.db.database import database
 from api.routers import demos
+from api.db.database import Base, async_engine
 
 
 FORMAT = "%(message)s"
@@ -20,12 +20,14 @@ app.include_router(demos.router, prefix="/v1")
 
 @app.on_event("startup")
 async def startup():
-    await database.connect()
+    async with async_engine.begin() as conn:
+        # await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    await database.disconnect()
+    await async_engine.dispose()
 
 
 @app.get("/")
