@@ -3,7 +3,7 @@ black==23.1.0
 cfgv==3.3.1
 distlib==0.3.6
 filelock==3.9.0
-identify==2.5.17
+identify==2.5.18
 mypy-extensions==1.0.0
 nodeenv==1.7.0
 packaging==23.0
