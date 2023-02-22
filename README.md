@@ -43,6 +43,9 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=fastapi-vue-pg-password
 POSTGRES_DB=fastapi-demo
 POSTGRES_PORT=5432
+
+# Timezone
+TZ=Europe/Vienna
 ```
 
 and run docker compose:
@@ -56,4 +59,12 @@ docker compose up -d
 ```shell script
 . venv/bin/activate
 pip install -r backend/requirements-dev.txt  # includes requirements.txt
+```
+
+## Testing
+
+### API Backend Tests
+
+```shell script
+docker compose backend coverage run -m pytest
 ```
