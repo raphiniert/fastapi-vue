@@ -11,6 +11,8 @@ fastapi, elasticsearch and vue
     │   │   ├── routers          # actual endpoints
     │   │   ├── main.py          # main entrypoint
     │   │   └── schemas.py       # demo json api schemas
+    │   ├── tests                # tests
+    │   │   └── conftest.py      # fixtures
     │   ├── Dockerfile           # python3.10-alpine, running api main.py
     │   ├── requirements-dev.txt # list of version pinned dev dependencies
     │   └── requirements.txt     # list of version pinned python dependencies
