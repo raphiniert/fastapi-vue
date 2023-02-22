@@ -29,7 +29,7 @@ git clone https://github.com/raphiniert/fastapi-vue.git
 cd fastapi-vue
 ```
 
-#### Local developemmnt
+#### Local developement
 
 Create a `.env` file with the following content:
 
