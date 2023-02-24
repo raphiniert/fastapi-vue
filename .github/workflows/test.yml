@@ -1,0 +1,54 @@
+name: Run tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:    
+      - main
+      
+jobs:
+  runner-job:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_SERVER: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: super-secret-test-pw
+      POSTGRES_DB: fastapi-demo-tests
+      POSTGRES_PORT: 5432
+
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres:15-alpine
+        env:
+          POSTGRES_SERVER: db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: super-secret-test-pw
+          POSTGRES_DB: fastapi-demo-tests
+          POSTGRES_PORT: 5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    steps:
+      # Downloads a copy of the code in the repository before running the tests
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
+      # install dev dependencies  
+      - name: Install dev dependencies
+        run: pip install -r backend/requirements-dev.txt
+        
+      # run pytest
+      - name: Run pytest
+        run: coverage run -m pytest
+      
+      
+      
