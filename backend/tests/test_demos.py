@@ -5,6 +5,7 @@ from httpx import AsyncClient
 from starlette.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
     HTTP_422_UNPROCESSABLE_ENTITY,
 )
@@ -68,6 +69,18 @@ async def test_patch_demo(async_client) -> None:
         "decimal_value": 3.14,
         "entry_date": "2023-02-18T20:00:36+00:00",  # utc
     }
+
+
+@pytest.mark.anyio
+async def test_patch_mismatching_id_raise_error(async_client) -> None:
+    json_data = {
+        "id": 2,
+        "name": "Wrong id Demo",
+        "decimal_value": 3.14,
+        "entry_date": "2023-02-18T21:00:36+01:00",
+    }
+    res = await async_client.patch("/v1/demos/1", json=json_data, follow_redirects=True)
+    assert res.status_code == HTTP_400_BAD_REQUEST
 
 
 @pytest.mark.anyio
