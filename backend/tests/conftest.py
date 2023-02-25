@@ -1,16 +1,11 @@
 import asyncio
 import pytest
 
-from fastapi.testclient import TestClient
-from typing import Generator
+from fastapi import FastAPI
+from httpx import AsyncClient
+from typing import AsyncGenerator, Generator
 
-from api.db.database import AsyncSessionLocal
-from api.main import app
-
-
-@pytest.fixture(scope="session")
-def db() -> Generator:
-    yield AsyncSessionLocal()
+from api.db.database import Base, async_engine
 
 
 @pytest.fixture(scope="session")
@@ -21,6 +16,27 @@ def event_loop() -> Generator:
 
 
 @pytest.fixture(scope="module")
-def client() -> Generator:
-    with TestClient(app) as c:
-        yield c
+async def app() -> FastAPI:
+    from api.main import app
+
+    # drop all tables and create new ones
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+
+    yield app
+
+    # clean up afterwards
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+
+
+@pytest.fixture(scope="module")
+def anyio_backend():
+    return "asyncio"
+
+
+@pytest.fixture(scope="module")
+async def async_client(app: FastAPI) -> AsyncGenerator:
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
