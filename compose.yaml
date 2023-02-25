@@ -4,6 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: dev
       args:
         PROJECT_NAME: ${PROJECT_NAME}
     depends_on:
@@ -13,8 +14,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "200m"
-        max-file: "10"
+        max-size: "10m"
+        max-file: "5"
     ports:
       - "8000:8000"
     volumes:
@@ -35,5 +36,5 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "200m"
-        max-file: "10"
+        max-size: "10m"
+        max-file: "5"
