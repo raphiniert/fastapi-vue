@@ -1,3 +1,9 @@
+![workflow](https://github.com/raphiniert/fastapi-vue/actions/workflows/test.yml/badge.svg)
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+![code style](https://img.shields.io/badge/code%20style-black-000000.svg)
+
+
 # fastapi-vue
 fastapi, elasticsearch and vue
 
