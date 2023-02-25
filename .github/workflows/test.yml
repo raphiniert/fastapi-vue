@@ -51,11 +51,3 @@ jobs:
       # run pytest
       - name: Run pytest
         run: coverage run -m pytest
-
-      - name: Output coverage xml
-        run: coverage xml -o ./docs/reports/coverage/coverage.xml
-        with:
-          files: ./docs/reports/coverage/coverage.xml
-
-      - name: Output coverage html
-        run: coverage html
